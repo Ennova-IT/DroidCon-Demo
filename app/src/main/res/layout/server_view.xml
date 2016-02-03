@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_margin="16dp"
+    tools:background="@android:color/holo_red_dark">
+
+    <ImageView
+        android:id="@+id/serverIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        tools:src="@drawable/ic_phone"/>
+
+    <TextView
+        android:id="@+id/serverName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/serverIcon"
+        android:layout_toRightOf="@id/serverIcon"
+        android:textSize="18sp"
+        android:padding="4dp"
+        tools:text="Nexus 5"/>
+
+    <ImageView
+        android:id="@+id/serverOsIcon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_below="@id/serverName"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY"
+        tools:src="@drawable/ic_android"/>
+
+    <TextView
+        android:id="@+id/serverOS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/serverIcon"
+        android:layout_toRightOf="@id/serverIcon"
+        android:layout_below="@id/serverName"
+        android:layout_marginRight="18dp"
+        android:textSize="18sp"
+        android:paddingLeft="4dp"
+        tools:text="5.1.1"/>
+
+</RelativeLayout>

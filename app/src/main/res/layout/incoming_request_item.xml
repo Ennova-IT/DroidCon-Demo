@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/itemUserAgent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="20sp"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="none"
+        android:scrollHorizontally="true"
+        tools:text="User agent" />
+
+    <TextView
+        android:id="@+id/itemTimestamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end|right"
+        android:padding="8dp"
+        android:textColor="@color/colorAccent"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="none"
+        android:scrollHorizontally="true"
+        tools:text="timestamp"/>
+
+
+</LinearLayout>
