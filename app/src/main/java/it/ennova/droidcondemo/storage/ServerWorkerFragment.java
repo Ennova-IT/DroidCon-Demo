@@ -23,6 +23,7 @@ import it.ennova.droidcondemo.DemoApp;
 import it.ennova.droidcondemo.callbacks.OnConnectionReceivedListener;
 import it.ennova.droidcondemo.common.Requests;
 import it.ennova.droidcondemo.factories.DeviceNameFactory;
+import it.ennova.droidcondemo.model.MultimediaFile;
 import it.ennova.droidcondemo.providers.PhotoProvider;
 import it.ennova.droidcondemo.providers.ServerProvider;
 import it.ennova.zerxconf.ZeRXconf;
@@ -34,7 +35,7 @@ public class ServerWorkerFragment extends ObservableHeadlessFragment<NetworkServ
     private boolean isServerStarted = false;
     private OnConnectionListener masterListener;
     private Pair<List<AsyncHttpServerRequest>, List<String>> requests;
-    private BaseStorage<String> photosList = new BaseStorage<>();
+    private BaseStorage<MultimediaFile> photosList = DemoApp.getInstance().getPhotoListInstance();
 
     private final static String TAG = "ServerWorkerFragment";
 
@@ -70,27 +71,14 @@ public class ServerWorkerFragment extends ObservableHeadlessFragment<NetworkServ
     @Override
     public void onConnectionReceived(@NonNull String requestedPath, @NonNull AsyncHttpServerRequest request,
                                      @NonNull AsyncHttpServerResponse response) {
-
-        parseRootRequestedPath(requestedPath);
         if (masterListener != null) {
             new Handler(Looper.getMainLooper()).post(() -> masterListener.onConnectionReceived(requestedPath, request, response));
         }
     }
 
-    private void parseRootRequestedPath(@NonNull String requestedPath) {
-        if (requestedPath.equals(ROOT_PATH)) {
-            preparePhotos();
-        }
-    }
-
-    private void preparePhotos() {
-        if (DemoApp.getInstance().getRetrievedPhotos() == null || DemoApp.getInstance().getRetrievedPhotos().isEmpty()) {
-            PhotoProvider.getInstance().getCameraImagesFrom(getActivity()).subscribe(DemoApp.getInstance()::addRetrievedPhoto, throwable -> Log.e(TAG, throwable.getMessage()));
-        }
-    }
-
     public void startServer() {
         provider.start();
+        preparePhotos();
         isServerStarted = true;
     }
 
@@ -98,6 +86,22 @@ public class ServerWorkerFragment extends ObservableHeadlessFragment<NetworkServ
         provider.stop();
         isServerStarted = false;
         resetObservable();
+    }
+
+    private void preparePhotos() {
+        if (photosList.isEmpty()) {
+            PhotoProvider.getInstance().getCameraImagesFrom(getActivity()).subscribe(this::onPhotoRetrieved,
+                    throwable -> Log.e(TAG, throwable.getMessage()), this::onPhotoRetrievalCompleted);
+        }
+    }
+
+    private void onPhotoRetrieved(@NonNull MultimediaFile file) {
+        Log.d(TAG, "New file found: " + file.getFileName());
+        photosList.add(file);
+    }
+
+    private void onPhotoRetrievalCompleted() {
+        Log.d(TAG, "All files have been retrieved");
     }
 
     public boolean isServerStarted() {

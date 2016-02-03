@@ -1,16 +1,13 @@
 package it.ennova.droidcondemo;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
-
-import java.util.List;
 
 import it.ennova.droidcondemo.model.MultimediaFile;
 import it.ennova.droidcondemo.storage.BaseStorage;
 
 public class DemoApp extends Application{
     private static DemoApp instance;
-    private BaseStorage<MultimediaFile> photosList = new BaseStorage<>();
+    private static BaseStorage<MultimediaFile> photosList = new BaseStorage<>();
 
     @Override
     public void onCreate() {
@@ -22,11 +19,9 @@ public class DemoApp extends Application{
        return instance;
     }
 
-    public void addRetrievedPhoto(@NonNull MultimediaFile photo) {
-        photosList.add(photo);
+    public BaseStorage<MultimediaFile> getPhotoListInstance() {
+        return photosList;
     }
 
-    public List<MultimediaFile> getRetrievedPhotos() {
-        return photosList.get();
-    }
+
 }

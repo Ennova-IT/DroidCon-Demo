@@ -9,12 +9,17 @@ import java.util.List;
 public class BaseStorage<T> {
 
     private List<T> cache = new ArrayList<>();
+    private T[] temporary = (T[]) new Object[0];
 
-    public void add(@NonNull T data) {
+    public synchronized void add(@NonNull T data) {
         cache.add(data);
     }
 
-    public List<T> get() {
-        return cache;
+    public T[] get() {
+        return cache.toArray(temporary);
+    }
+
+    public boolean isEmpty() {
+        return cache.isEmpty();
     }
 }
