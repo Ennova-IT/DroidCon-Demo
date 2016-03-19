@@ -4,7 +4,7 @@ DroidCon Demo
 Useful libraries:
 ------------
 <ul>
-  <li>[better-zeroconf](1)</li>
+  <li>[better-zeroconf][1]</li>
   <li>[RxDNSSD](2)</li>
   <li>[RxBonjour](3)</li>
   <li>[ZeRxConf](4)</li>
